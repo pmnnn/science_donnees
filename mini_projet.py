@@ -2,6 +2,10 @@ import statistics as stat
 import numpy as np
 import matplotlib.pyplot as plt
 
+"""
+EXERCICE4
+"""
+
 
 def boite_dispersion(serie, titre="Boîte de Dispersion"):
 
