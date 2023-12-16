@@ -1,13 +1,11 @@
+import pandas as pd 
 import statistics as stat
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
 
-"""
-EXERCICE 2
-"""
-
+"""EXERCICE 2"""
 
 # Données d'exemple
 T = np.array([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50])
@@ -62,10 +60,7 @@ V = V0 * np.exp(-t / tau)
 
 
 
-"""
-EXERCICE 3
-"""
-
+"""EXERCICE 3"""
 
 XPA = np.array([100, 61, 76, 74, 90, 93, 102, 98, 103, 110, 117, 118, 112, 115, 116, 121, 134, 130])
 YPI = np.array([10, 50, 84, 99, 113, 122, 128, 143, 145, 159, 172, 188, 204, 213, 220, 242, 254, 273])
@@ -161,9 +156,7 @@ prediction_1962 = a_prime * 273 + b_prime
 
 
 
-"""
-EXERCICE4
-"""
+"""EXERCICE4"""
 
 
 def boite_dispersion(serie, titre="Boîte de Dispersion"):
@@ -215,9 +208,7 @@ plt.show()
 
 
 
-"""
-EXERCICE 5
-"""
+"""EXERCICE 5"""
 
 
 def importer_csv(nom_fichier):    
