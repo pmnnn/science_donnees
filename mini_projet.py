@@ -5,6 +5,112 @@ import matplotlib.pyplot as plt
 import csv
 
 
+'''Exercice 1'''
+
+# 1 (a,b et c)
+data = pd.read_csv('dataMP.csv', sep = ';', encoding = 'latin_1')
+X = data.iloc[ :, 1]
+Y = data.iloc[ :, 2]
+
+# 2)
+def nuage_point(x, y):
+    plt.scatter(x, y)
+    plt.title("nuage de points de Y en fonction de X")
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.show()
+
+# 3)
+m_X = np.mean(X)
+m_Y = np.mean(Y)
+ec_type_X = np.std(X)
+ec_type_Y = np.std(Y)
+
+# 4)
+def cov(x, y):
+    covariance = np.cov(x, y, ddof = 1)[0, 1]
+    return covariance
+
+# 5)
+def correlation(cov, ec_type_1, ec_type_2):
+    r = cov / (ec_type_1 * ec_type_2)
+    return r
+
+# 6)
+def droite_regression(x, y):
+    var_X = np.var(x, ddof = 1)
+    
+    a = cov(x, y) / var_X
+    b = m_Y - a * m_X
+    
+    plt.scatter(x, y)
+    
+    x_range = np.linspace(min(x), max(y), 100)
+    y_regression = a * x_range + b
+    plt.plot(x_range, y_regression, color='blue', label='Régression linéaire')
+ 
+    plt.title('Nuage de points avec la droite de régression linéaire et le point G')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.legend()
+    plt.show()
+
+# 7)
+def point_G(moyenne_x, moyenne_y):
+    x = moyenne_x
+    y = moyenne_y
+    G = plt.scatter(x, y, color = 'black')
+ 
+# 8 (a, b et c)
+def residuel(x, y):
+   
+    var_X = np.var(x, ddof = 1)
+    a = cov(x, y) / var_X
+    b = m_Y - a * m_X
+
+    residus = y - (a * x + b)
+    Y_hat = a * x + b
+    
+    # Méthode 1 : On calcule la variance des résidus 
+    variance_residuelle_1 = np.var(residus, ddof = 1)
+    # Méthode 2 : On calcule la somme des carrés des résidus divisée par (n-2)
+    variance_residuelle_2 = np.sum(residus ** 2) / (len(data) - 2)
+    print(f"Variance résiduelle (méthode 1) : {variance_residuelle_1}")
+    print(f"Variance résiduelle (méthode 2) : {variance_residuelle_2}")
+    
+    # Méthode 1 : On calcule la variance des valeurs prédites directement
+    variance_expliquee_1 = np.var(Y_hat, ddof = 1)
+    # Méthode 2 : On calcule la somme des carrés des valeurs prédites divisée par (n-1)
+    variance_expliquee_2 = np.sum((Y_hat - np.mean(y)) ** 2) / len(data)
+    print(f"Variance expliquée (méthode 1) : {variance_expliquee_1}")
+    print(f"Variance expliquée (méthode 2) : {variance_expliquee_2}")
+    
+    # Vérifier l'équation de la variance
+    variance_Y = np.var(y, ddof = 1)
+    equation_variance = variance_expliquee_1 + variance_residuelle_1
+    print(f"Variance totale (var(Y)) : {variance_Y}")
+    print(f"Variance expliquée + Variance résiduelle : {equation_variance}")
+      
+
+
+# Affichage de toute les questions 
+def affichage():
+    nuage_point(X, Y)
+    point_G(m_X, m_Y)
+    droite_regression(X, Y)
+    print(f"Moyenne X : {m_X}")
+    print(f"Moyenne Y : {m_Y}") 
+    print(f"Ecart type X : {ec_type_X}")
+    print(f"Ecart type Y : {ec_type_Y}")
+    print(f"Covariance XY : {cov(X, Y)}") 
+    print(f"Corrélation linéaire XY :  r = {correlation(cov(X, Y), ec_type_X, ec_type_Y)}\n")
+    residuel(X, Y)
+    
+# r = 0.86, qui est très proche de 1 donc on a les variables X et Y qui sont en fortes dépendances
+
+# affichage()
+
+
 """EXERCICE 2"""
 
 # Données d'exemple
@@ -234,7 +340,6 @@ POIDS2 = S1[15:-1]
 m2 = stat.mean(POIDS2)
 
 mtot = (m1+m2)/2
-
 
 
 moyenne_S1 = stat.mean(S1)
