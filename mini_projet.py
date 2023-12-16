@@ -4,7 +4,11 @@ import matplotlib.pyplot as plt
 import csv
 
 
-'''PARTIE 1 EX2'''
+"""
+EXERCICE 2
+"""
+
+
 # Données d'exemple
 T = np.array([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50])
 V = np.array([5.098, 3.618, 2.581, 2.011, 1.486, 1.028, 0.845, 0.573, 0.429, 0.29, 0.2])
@@ -55,6 +59,106 @@ V = V0 * np.exp(-t / tau)
 
 # Affichage du résultat
 # print(f"La valeur de V pour t = {t} ms est : {V}")
+
+
+
+"""
+EXERCICE 3
+"""
+
+
+XPA = np.array([100, 61, 76, 74, 90, 93, 102, 98, 103, 110, 117, 118, 112, 115, 116, 121, 134, 130])
+YPI = np.array([10, 50, 84, 99, 113, 122, 128, 143, 145, 159, 172, 188, 204, 213, 220, 242, 254, 273])
+
+# 8.(a) Régression linéaire de y en x
+a, b = np.polyfit(XPA, YPI, 1)
+
+# 9.(a) Régression linéaire de x en y
+a_prime, b_prime = np.polyfit(YPI, XPA, 1)
+
+# 8.(b) Droite d'ajustement
+regression_line = a * XPA + b
+
+# 9.(b) Droite d'ajustement
+regression_line_prime = a_prime * YPI + b_prime
+
+# 5. covariance entre x et y.
+covariance = np.cov(XPA, YPI)[0, 1]
+#print(f'Covariance entre x et y : {covariance}')
+
+# 6. coefficient de corrélation r.
+correlation_coefficient = np.corrcoef(XPA, YPI)[0, 1]
+#print(f'Coefficient de corrélation r : {correlation_coefficient}')
+
+# 8.(a) droite de régression linéaire de y en x
+#print(f"Droite de régression linéaire : y = {a:.2f}x + {b:.2f}")
+
+# 9.(a) droite de régression linéaire de x en y
+#print(f"Droite de régression linéaire : x = {a_prime:.2f}y + {b_prime:.2f}")
+
+# 8.(b) valeurs ajustées ŷi
+y_pred = a * XPA + b
+# distances de chaque point par rapport à la droite d'ajustement
+residuals = YPI - y_pred
+
+# 9.(b) valeurs ajustées x̂i 
+x_pred = a_prime * YPI + b_prime
+# distances de chaque point par rapport à la droite d'ajustement
+residuals_prime = XPA - x_pred
+
+#8.(b) valeurs ajustées ŷi distances résiduelles
+for i in range(len(XPA)):
+    #print(f"Valeur ajustée ŷ{XPA[i]} : {y_pred[i]:.2f}, Distance résiduelle : {residuals[i]:.2f}")
+
+# 9.(b) valeurs ajustées x̂i et distances résiduelles
+for i in range(len(YPI)):
+    #print(f"Valeur ajustée x̂{YPI[i]} : {x_pred[i]:.2f}, Distance résiduelle : {residuals_prime[i]:.2f}")
+    
+# 8.(c) variance résiduelle variance expliquée
+residual_variance = np.var(residuals)
+explained_variance = np.var(y_pred)
+#print(f"Variance résiduelle de y en x: {residual_variance:.2f}")
+#print(f"Variance expliquée de y en x: {explained_variance:.2f}")
+
+# 9.(c) variance résiduelle et variance expliquée
+residual_variance_prime = np.var(residuals_prime)
+explained_variance_prime = np.var(x_pred)
+#print(f"Variance résiduelle de x en y : {residual_variance_prime:.2f}")
+#print(f"Variance expliquée de x en y: {explained_variance_prime:.2f}")
+    
+
+G = (np.mean(XPA), np.mean(YPI))
+plt.scatter(XPA, YPI,color='red', label='Nuage de points y en x')
+plt.scatter(YPI, XPA,color='blue', label='Nuage de points x en y')
+plt.plot(XPA, regression_line, color='red', label='Droite de régression linéaire y en x')
+plt.plot(YPI, regression_line_prime, color='blue', label='Droite de régression linéaire x en y')
+plt.scatter(*G, color='black', marker='x', label='Point moyen G')
+plt.xlabel('Production Agricole')
+plt.ylabel('Production Industrielle')
+plt.title('Nuage de points avec le point moyen G')
+plt.legend()
+#plt.show()
+
+# 10(b) Coefficients de régression et corrélation
+r = np.corrcoef(XPA, YPI)[0, 1]  # coefficient de corrélation entre x et y
+
+# écarts-types
+sigma_x = np.std(XPA)
+sigma_y = np.std(YPI)
+
+# relations
+result_a = r * sigma_y / sigma_x
+result_a_prime = r * sigma_x / sigma_y
+
+#print(f' a\': {a_prime:.2f}, Résultat numérique : {result_a_prime:.2f}')
+#print(f' a : {a:.2f}, Résultat numérique : {result_a:.2f}')
+
+# 11
+# valeur prédite de la production agricole en 1962
+prediction_1962 = a_prime * 273 + b_prime
+#print(f"La valeur prédite de la production agricole en 1962 est de : {prediction_1962:.2f}")
+
+
 
 
 """
