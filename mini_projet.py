@@ -44,11 +44,12 @@ def droite_regression(x, y):
     b = m_Y - a * m_X
     
     plt.scatter(x, y)
-    
+
     x_range = np.linspace(min(x), max(y), 100)
     y_regression = a * x_range + b
     plt.plot(x_range, y_regression, color='blue', label='Régression linéaire')
- 
+    
+    # Ajouter des étiquettes et une légende
     plt.title('Nuage de points avec la droite de régression linéaire et le point G')
     plt.xlabel('X')
     plt.ylabel('Y')
@@ -59,7 +60,7 @@ def droite_regression(x, y):
 def point_G(moyenne_x, moyenne_y):
     x = moyenne_x
     y = moyenne_y
-    G = plt.scatter(x, y, color = 'black')
+    G = plt.scatter(x, y, color = 'black', label = "Point G moyen")
  
 # 8 (a, b et c)
 def residuel(x, y):
@@ -70,6 +71,7 @@ def residuel(x, y):
 
     residus = y - (a * x + b)
     Y_hat = a * x + b
+   
     
     # Méthode 1 : On calcule la variance des résidus 
     variance_residuelle_1 = np.var(residus, ddof = 1)
@@ -85,15 +87,16 @@ def residuel(x, y):
     print(f"Variance expliquée (méthode 1) : {variance_expliquee_1}")
     print(f"Variance expliquée (méthode 2) : {variance_expliquee_2}")
     
+    
     # Vérifier l'équation de la variance
-    variance_Y = np.var(y, ddof = 1)
+    variance_Y = np.var(y, ddof=1)
     equation_variance = variance_expliquee_1 + variance_residuelle_1
     print(f"Variance totale (var(Y)) : {variance_Y}")
     print(f"Variance expliquée + Variance résiduelle : {equation_variance}")
       
 
 
-# Affichage de toute les questions 
+# Affichage de toutes les questions 
 def affichage():
     nuage_point(X, Y)
     point_G(m_X, m_Y)
@@ -106,10 +109,8 @@ def affichage():
     print(f"Corrélation linéaire XY :  r = {correlation(cov(X, Y), ec_type_X, ec_type_Y)}\n")
     residuel(X, Y)
     
-# r = 0.86, qui est très proche de 1 donc on a les variables X et Y qui sont en fortes dépendances
 
 # affichage()
-
 
 """EXERCICE 2"""
 
