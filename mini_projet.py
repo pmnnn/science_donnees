@@ -3,7 +3,7 @@ import statistics as stat
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
-
+from statistics import mean
 
 '''Exercice 1'''
 
