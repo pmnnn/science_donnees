@@ -359,7 +359,88 @@ tracer_histogramme(S1, "Diagramme en bâtons des pesées des 30 bébés", "Poids
 plt.xticks([1.8, 2., 2.2, 2.4, 2.6, 2.8, 3., 3.2, 3.4,3.6, 3.8])
 plt.show()
 
+"""    exercice 8    """
 
+donnees = [54.8, 55.4, 57.7, 59.6, 60.1, 61.2, 62.0, 63.1, 63.5, 64.2, 65.2, 65.4, 65.9, 66.0, 67.6, 68.1, 69.5, 70.6, 71.5, 73.4, 75.0, 75.2]
+
+# 1. moyenne et écart-type
+moyenne = mean(donnees)
+ecart_type = np.std(donnees)  
+
+#print("La moyenne de l'échantillon est de :", moyenne)
+#print("L'écart-type de l'échantillon est de :", ecart_type)
+
+# 2. histogramme
+plt.hist(donnees, color='orange', edgecolor='black')  
+plt.title('Histogramme des niveaux de bruit')
+plt.xlabel('Niveau de bruit en dB')
+plt.ylabel('Fréquence')
+plt.show()
+
+# 4.(a) Estimation de la moyenne
+moy_est = moyenne
+
+# 4.(a) Estimation de l'écart-type sans ajustement sans biais
+ecart_type_est = ecart_type
+
+#print(" estimation moyenne :", moy_est)
+#print(" estimation écart-type :", ecart_type_est)
+
+# 4.(c) - Intervalle de confiance pour la moyenne avec 95%
+
+# Niveau de confiance
+confiance = 0.95
+
+# Degrés de liberté
+df = len(donnees) - 1
+
+# Valeur critique de la distribution de Student
+t_critique = t.ppf(1 - (1 - confiance) / 2, df)
+
+# Intervalle de confiance
+borne_inferieure = moy_est - t_critique * (ecart_type_est / np.sqrt(len(donnees)))
+borne_superieure = moy_est + t_critique * (ecart_type_est / np.sqrt(len(donnees)))
+
+#print("Intervalle de confiance à", confiance * 100, "% pour la moyenne :", (borne_inferieure, borne_superieure))
+
+
+# 4.(d) densité de proba
+val_x = np.linspace(min(donnees), max(donnees))
+densite_proba = norm.pdf(val_x, moy_est, ecart_type_est)
+
+# nouveau histograme avec courbe de densité de proba
+plt.hist(donnees, color='orange',edgecolor='black',density=True)
+plt.plot(val_x, densite_proba, label='Densité de probabilité')
+plt.title('Histogramme et Densité de probabilité de X')
+plt.xlabel('Niveau de bruit (dB)')
+plt.ylabel('Fréquence / Densité de proba')
+plt.legend()
+plt.show()
+
+# 4.(e) Estimation de la probabilité dépasse 70 dB
+sigma = np.std(donnees, ddof=1) # ddof ajuste les degrés de liberté
+# Calcul de la probabilité P(X > 70)
+probabilite_depasse_70 = 1 - norm.cdf(70, loc=moy_est, scale= sigma)
+
+#print("Probabilité que le niveau de bruit dépasse 70 dB :", probabilite_depasse_70)
+
+
+# 4.(f) Estimation de la probabilité que le niveau de bruit est entre 60 db et 75 db
+
+# Calcul de la probabilité P(60 <= X <= 75)
+probabilite_intervalle = norm.cdf(75, loc=moy_est, scale= sigma) - norm.cdf(60, loc=moy_est, scale= sigma)
+
+#print("Probabilité que le niveau de bruit soit entre 60 dB et 75 dB :", probabilite_intervalle)
+
+
+# 4.(g) Déterminer t1 tel que P(X < t1) = 0.95
+
+t1 = norm.ppf(0.95, moy_est, sigma)
+#print("t1 tel que P(X < t1) = 0.95 :", t1)
+
+# 4.(g) Déterminer t2 tel que P(X ≥ t2) = 0.25
+t2 = norm.ppf(1 - 0.25, moy_est, sigma)
+#print("t2 tel que P(X ≥ t2) = 0.25 :", t2)
 
 
 
