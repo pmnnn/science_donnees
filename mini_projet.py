@@ -438,6 +438,51 @@ t2 = norm.ppf(1 - 0.25, moy_est, sigma)
 
 
 
+'''Exercice 9'''
+
+poids = ["< 55", "55-57", "57-59", "59-61", "61-63", "> 63"]
+nb_oeufs = [12, 12, 15, 18, 20, 23]
+
+# 1)
+def histogramme(x, y):
+    plt.bar(x, y, color='blue', alpha=0.7)
+    plt.title("Distribution du poids des œufs")
+    plt.xlabel("Poids en grammes")
+    plt.ylabel("Nombre d'œufs")
+    plt.show()
+
+# 2)
+poids_centre = np.array([55, 56, 58, 60, 62, 63.5])
+nombre_oeufs = np.array([12, 12, 15, 18, 20, 23])
+
+moyenne = np.sum(poids_centre * nombre_oeufs) / np.sum(nombre_oeufs)
+variance = np.sum(nombre_oeufs * (poids_centre - moyenne)**2) / np.sum(nombre_oeufs)
+ecart_type = np.sqrt(variance)
+
+# 3)
+def test_normalité():
+
+    # Effectuer le test de normalité
+    stat, p_value = shapiro(poids_centre)
+    
+    
+    print(f"Statistique de test : {stat}")
+    
+    # Interprétation des résultats
+    if p_value > 0.05:
+        print("La distribution peut être modélisée par une loi normale.")
+    else:
+        print("La distribution ne suit pas une loi normale.")
+
+
+def affichage():
+    histogramme(poids, nb_oeufs)
+    print(f"Moyenne : {moyenne}")
+    print(f"Écart-type : {ecart_type}")  
+    test_normalité()
+    
+    
+# affichage()
 
 
 
