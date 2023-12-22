@@ -4,8 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 from statistics import mean
-from scipy.stats import linregress
-
+from scipy.stats import linregress, shapiro
 
 '''Exercice 1'''
 
