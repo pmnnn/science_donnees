@@ -351,7 +351,9 @@ tracer_histogramme(S1, "Diagramme en bâtons des pesées des 30 bébés", "Poids
 plt.xticks([1.8, 2., 2.2, 2.4, 2.6, 2.8, 3., 3.2, 3.4,3.6, 3.8])
 plt.show()
 
-"""    exercice 8    """
+
+
+"""    Exercice 8    """
 
 donnees = [54.8, 55.4, 57.7, 59.6, 60.1, 61.2, 62.0, 63.1, 63.5, 64.2, 65.2, 65.4, 65.9, 66.0, 67.6, 68.1, 69.5, 70.6, 71.5, 73.4, 75.0, 75.2]
 
