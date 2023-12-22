@@ -114,56 +114,46 @@ def affichage():
 
 """EXERCICE 2"""
 
-# Données d'exemple
+# Données
 T = np.array([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50])
 V = np.array([5.098, 3.618, 2.581, 2.011, 1.486, 1.028, 0.845, 0.573, 0.429, 0.29, 0.2])
 
-# Calcul de la covariance avec la fonction cov de NumPy
-covariance_matrix = np.cov(T, V)
-
-# La covariance entre x et y est le coefficient situé à la position (0, 1) ou (1, 0) dans la matrice de covariance
-covariance_TV = covariance_matrix[0, 1]
-covariance_T = np.cov(T)
-
-a = covariance_TV /covariance_T
-b = log(5.098)
-tau = (-1)/ a
-# print("a = :", a)
-# print("b = :", b)
-# print("tau = :", tau)
-
-# Calcul des valeurs de x
-X_ln = -T / tau
+# Calcul des valeurs de x, T (ms)
+X_ln = T
 
 # Calcul des valeurs de y
 Y_ln = np.log(V)
 
-# Affichage des résultats
-# print("Valeurs de X_ln :", X_ln)
-# print("Valeurs de Y_ln :", Y_ln)
+#print(f" valeurs de X_ln : { X_ln} \n ")
+#print(f" valeurs de Y_ln : {Y_ln} \n ")
 
+# Régression linéaire
+pente, intercept, r_value, p_value, erreur_std = linregress(X_ln, Y_ln)
 
-# Générer les valeurs prédites à partir de la régression linéaire
-Y_pred = a * X_ln + b
+# Calcul de V0 et tau
+V0 = np.exp(intercept)
+tau = -1 / pente
+
+#print(f" V0 = {V0} \n tau = {tau}")
+
+Y_pred =  pente * X_ln + intercept
 
 # Affichage des résultats
 plt.scatter(X_ln, Y_ln, label='Données')
 plt.plot(X_ln, Y_pred, color='red', label='Régression linéaire')
-plt.xlabel('X_ln')
+plt.xlabel('X_ln (T en ms)')
 plt.ylabel('Y_ln')
 plt.legend()
 plt.title('Régression Linéaire')
 #plt.show()
 
 
-t = 53  # temps en ms
-V0 = 5.098  # Remplacez cette valeur par la tension initiale obtenue
+t = 53  # temps en ms 
 
 # Calcul de V pour t = 53 ms
 V = V0 * np.exp(-t / tau)
 
-# Affichage du résultat
-# print(f"La valeur de V pour t = {t} ms est : {V}")
+#print(f"La valeur de V pour t = {t} ms est : {V}")
 
 
 
