@@ -3,8 +3,12 @@ import statistics as stat
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+import math 
 from statistics import mean
-from scipy.stats import linregress, shapiro
+from scipy.stats import linregress, shapiro, norm
+import seaborn as sns
+
+
 
 '''Exercice 1'''
 
@@ -200,11 +204,11 @@ x_pred = a_prime * YPI + b_prime
 residuals_prime = XPA - x_pred
 
 #8.(b) valeurs ajustées ŷi distances résiduelles
-for i in range(len(XPA)):
+# for i in range(len(XPA)):
     #print(f"Valeur ajustée ŷ{XPA[i]} : {y_pred[i]:.2f}, Distance résiduelle : {residuals[i]:.2f}")
 
 # 9.(b) valeurs ajustées x̂i et distances résiduelles
-for i in range(len(YPI)):
+# for i in range(len(YPI)):
     #print(f"Valeur ajustée x̂{YPI[i]} : {x_pred[i]:.2f}, Distance résiduelle : {residuals_prime[i]:.2f}")
     
 # 8.(c) variance résiduelle variance expliquée
@@ -271,8 +275,8 @@ def  tracer_histogramme(liste_longueurs, titre, abcisse, n):
     plt.title(titre)
     plt.xlabel(abcisse)
     plt.ylabel('Effectif')
-    
 
+    
 
 BonasaUmbellus = [153,165,160,150,159,151,163,160,158,150,154,153,163,150,158,150,158,155,163,156,157,162,160,152,164,158,153,162,166,162,165,157,174,158,171,162,155,156,159,162,152,158,164,164,162,158,156,171,164,158]
 
@@ -289,25 +293,24 @@ ecart_quartiles_BonasaUmbellus = quartiles_BonasaUmbellus[3]-quartiles_BonasaUmb
 variance_BonasaUmbellus = np.var(BonasaUmbellus)
 ecart_type_BonasaUmbellus = np.std(BonasaUmbellus)
 
-print("EXERCICE 4:")
-print("La valeur longueur minimun de l'échantillon est de ", min_BonasaUmbellus, "cm")
-print("La valeur longueur maximun de l'échantillon est de ", max_BonasaUmbellus, "cm")
-print("L'étendue de l'échantillon est de ", etendue_BonasaUmbellus, "cm")
-print("La moyenne de l'échantillon est de ", moyenne_BonasaUmbellus, "cm")
-print("La médiane de l'échantillon est de ", mediane_BonasaUmbellus, "cm")
-print("Voici les quartiles de l'échantillon: \n -Q1 =", quartiles_BonasaUmbellus[0], "\n -Q2 =", quartiles_BonasaUmbellus[1], "\n -Q3 =", quartiles_BonasaUmbellus[2], "\n -Q4 =", quartiles_BonasaUmbellus[3])
-print("Variance = ", variance_BonasaUmbellus)
-print("Ecart type = ", ecart_type_BonasaUmbellus)
+# print("EXERCICE 4:")
+# print("longueur minimun = ", min_BonasaUmbellus, "cm")
+# print("longueur maximun = ", max_BonasaUmbellus, "cm")
+# print("L'étendue = ", etendue_BonasaUmbellus, "cm")
+# print("moyenne = ", moyenne_BonasaUmbellus, "cm")
+# print("médiane = ", mediane_BonasaUmbellus, "cm")
+# print("Voici les quartiles de l'échantillon: \n -Q1 =", quartiles_BonasaUmbellus[0], "\n -Q2 =", quartiles_BonasaUmbellus[1], "\n -Q3 =", quartiles_BonasaUmbellus[2], "\n -Q4 =", quartiles_BonasaUmbellus[3])
+# print("Variance = ", variance_BonasaUmbellus)
+# print("Ecart type = ", ecart_type_BonasaUmbellus)
 
-boite_dispersion(BonasaUmbellus)
-tracer_histogramme(BonasaUmbellus, "Histogramme des longueurs de la rectrice centrale", 'Longuer(cm)', etendue_BonasaUmbellus)
-plt.show()
+# boite_dispersion(BonasaUmbellus)
+# tracer_histogramme(BonasaUmbellus, "Histogramme des longueurs de la rectrice centrale", 'Longuer(cm)', etendue_BonasaUmbellus)
+# plt.show()
 
 
 
 
 """EXERCICE 5"""
-
 
 def importer_csv(nom_fichier):    
     data = []
@@ -334,21 +337,95 @@ m2 = stat.mean(POIDS2)
 mtot = (m1+m2)/2
 
 
+
 moyenne_S1 = stat.mean(S1)
 ecart_type_S1 = np.std(S1)
 
 
-print("EXERCICE 5:")
-print("La moyenne de l'échantillon est de ", moyenne_S1, "kg")
-print("Ecart type = ", ecart_type_S1)
-print("m1 = ", m1)
-print("m2 = ", m2)
-print("mtot = ", mtot)
+# print("EXERCICE 5:")
+# print("La moyenne de l'échantillon est de ", moyenne_S1, "kg")
+# print("Ecart type = ", ecart_type_S1)
+# print("m1 = ", m1)
+# print("m2 = ", m2)
+# print("moyenne totale = ", mtot)
 
-boite_dispersion(S1)
-tracer_histogramme(S1, "Diagramme en bâtons des pesées des 30 bébés", "Poids en kg", [1.8,1.9, 2., 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.,  3.1, 3.2, 3.3, 3.4, 3.5,3.6, 3.7, 3.8])
-plt.xticks([1.8, 2., 2.2, 2.4, 2.6, 2.8, 3., 3.2, 3.4,3.6, 3.8])
-plt.show()
+# boite_dispersion(S1)
+# tracer_histogramme(S1, "Diagramme en bâtons des pesées des 30 bébés", "Poids en kg", [1.8,1.9, 2., 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.,  3.1, 3.2, 3.3, 3.4, 3.5,3.6, 3.7, 3.8])
+# plt.xticks([1.8, 2., 2.2, 2.4, 2.6, 2.8, 3., 3.2, 3.4,3.6, 3.8])
+# plt.show()
+
+
+
+"""
+EXERCICE 6
+"""
+
+def comb(n,k):
+    if k <=n:
+        return math.factorial(n)/(math.factorial(n-k)*math.factorial(k))
+    else: 
+        return 0
+
+n = 500
+p = 0.031175
+
+moyenne = n * p
+ecart_type = math.sqrt(n*p*(1-p))
+
+prob_zero_personne =((1-p)**n) 
+prob_au_moins_un = 1 - prob_zero_personne
+
+prob_max_3 = sum(comb(n, k) * (p**k) * ((1-p)**(n-k)) for k in range(4))
+
+prob_X_250 = sum(comb(n, k) * (p**k) * ((1-p)**(n-k)) for k in range(250))
+prob_X_50 = sum(comb(n, k) * (p**k) * ((1-p)**(n-k)) for k in range(50))
+prob_X_sup_250 = 1 - prob_X_250
+prob_X_sup_50 = 1 - prob_X_50
+
+# print("moyenne = ", moyenne)
+# print("ecart type = ",ecart_type)
+
+# print("La probabilité qu'au moins une personne fasse sonner le portique est :", round(prob_au_moins_un, 4), "en arrondissant au millième près")
+# print("La probabilité qu'au maximum 3 personnes fassent sonner le portique est :", round(prob_max_3, 4))
+# print("La probabilité que X > 250 est :", round(prob_X_sup_250, 4))
+# print("La probabilité que X > 50 est :", round(prob_X_sup_50, 4))
+
+
+
+
+"""
+EXERCICE 7
+"""
+
+
+
+mu = 360
+sigma = 6  # La racine carrée de la variance, car la variance est σ^2
+
+
+def fonction_densite_proba(y):
+    return 1 / (np.sqrt(2 * np.pi * sigma**2)) * np.exp(-(y - mu)**2 / (2 * sigma**2))
+
+
+y_values = np.linspace(mu - 4*sigma, mu + 4*sigma, 1000)
+pdf_values = fonction_densite_proba(y_values)
+
+Y = norm(mu, sigma)
+
+P_au_moins_345 = Y.sf(345)  # P(Y >= 345)
+P_plus_de_28_rates = Y.cdf(371)  # P(Y <= 372)
+op_rate_max = Y.ppf(0.99)
+
+# print("Probabilité de réussir au moins 345 opérations:", P_au_moins_345)
+# print("Probabilité de rater plus de 28 opérations:", P_plus_de_28_rates)
+# print("Nombre d'opération ratées que l'assurance accepte de couvrir: ", 400-op_rate_max)
+
+# plt.plot(y_values, pdf_values)
+# plt.xlabel('Y')
+# plt.ylabel('Densité de probabilité')
+# plt.title('Courbe de densité de probabilité de Y')
+# plt.show()
+
 
 
 
@@ -474,16 +551,131 @@ def test_normalité():
         print("La distribution ne suit pas une loi normale.")
 
 
-def affichage():
-    histogramme(poids, nb_oeufs)
-    print(f"Moyenne : {moyenne}")
-    print(f"Écart-type : {ecart_type}")  
-    test_normalité()
+# histogramme(poids, nb_oeufs)
+# print(f"Moyenne : {moyenne}")
+# print(f"Écart-type : {ecart_type}")  
+# test_normalité()
     
-    
-# affichage()
 
 
+"""
+EXERCICE 10
+"""
+
+televisions = pd.read_csv('televisions.dat', delimiter='\t')
+ 
+
+resumé_numerique = televisions.describe()
+ 
+
+def dispersion_tv_phys(data):
+    plt.figure(figsize=(10, 6))
+    plt.scatter(data['teleratio'], data['physratio'])
+    plt.title('Diagramme de dispersion entre teleratio et physratio')
+    plt.xlabel('Nombre de personnes par télévision')
+    plt.ylabel('Nombre de personnes par physicien')
+    plt.show()
+
+def histogrammes_tv_phys(data):
+    plt.figure(figsize=(12, 6))
+    plt.subplot(121)
+    plt.hist(data['teleratio'], bins=15)
+    plt.title('Distribution de teleratio')
+    plt.xlabel('Nombre de personnes par téléviseur')
+    plt.ylabel('Fréquence')
+
+    plt.subplot(122)
+    plt.hist(data['physratio'], bins=15)
+    plt.title('Distribution de physratio')
+    plt.xlabel('Nombre de personnes par physicien')
+    plt.ylabel('Fréquence')
+
+    plt.tight_layout()
+    plt.show()
+
+def boites_tv_phys(data):
+    plt.figure(figsize=(15, 5))
+    plt.subplot(121)
+    sns.boxplot(x=data['teleratio'])
+    plt.title('Diagramme en boîte de teleratio')
+    plt.xlabel('Nombre de personnes par téléviseur')
+
+    plt.subplot(122)
+    sns.boxplot(x=data['physratio'])
+    plt.title('Diagramme en boîte de physratio')
+    plt.xlabel('Nombre de personnes par physicien')
+    
+    plt.tight_layout()
+    plt.show()
+
+
+def histogrammes_esperances_vie(data):
+    plt.figure(figsize=(18, 6))
+    plt.subplot(131)
+    sns.histplot(data['espvie'], kde=True) 
+    plt.title("Histogramme de l'Espérance de Vie")
+
+    plt.subplot(132)
+    sns.histplot(data['espvieF'], kde=True) 
+    plt.title("Histogramme de l'Espérance de Vie des Femmes")
+
+    plt.subplot(133)
+    sns.histplot(data['espvieH'], kde=True) 
+    plt.title("Histogramme de l'Espérance de Vie des Hommes")
+
+    plt.tight_layout()
+    plt.show()
+
+def boites_esperances_vie(data):    
+    plt.figure(figsize=(18, 6))
+    plt.subplot(131)
+    sns.boxplot(x=data['espvie'])
+    plt.title('Boîte - Espérance de Vie')
+
+    plt.subplot(132)
+    sns.boxplot(x=data['espvieF'])
+    plt.title('Boîte - Espérance de Vie des Femmes')
+
+    plt.subplot(133)
+    sns.boxplot(x=data['espvieH'])
+    plt.title('Boîte - Espérance de Vie des Hommes')
+
+    plt.tight_layout()
+    plt.show()
+
+def relations(data, obj1, obj2):
+    plt.figure(figsize=(12, 6))
+
+    plt.subplot(121)
+    plt.scatter(data[obj1], data[obj2])
+    plt.title(f'Représentation entre {obj1} et {obj2}')
+    plt.xlabel(obj1)
+    plt.ylabel(obj2)
+
+    log_obj1 = np.log(data[obj1])
+
+    plt.subplot(122)
+    plt.scatter(log_obj1, data[obj2])
+    plt.title(f'Représentation entre {obj2} et log({obj1})')
+    plt.xlabel(f'Log({obj1})')
+    plt.ylabel(obj2)
+
+    plt.tight_layout()
+    plt.show()
+ 
+
+
+print(resumé_numerique)
+
+dispersion_tv_phys(televisions)
+histogrammes_tv_phys(televisions)
+boites_tv_phys(televisions)
+
+histogrammes_esperances_vie(televisions)
+boites_esperances_vie(televisions)
+
+relations(televisions, 'teleratio', 'espvie')
+relations(televisions, 'physratio', 'espvie')
 
 
 
