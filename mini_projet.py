@@ -5,10 +5,8 @@ import matplotlib.pyplot as plt
 import csv
 import math 
 from statistics import mean
-from scipy.stats import linregress, shapiro, norm
+from scipy.stats import * 
 import seaborn as sns
-
-
 
 '''Exercice 1'''
 
