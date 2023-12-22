@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import csv
 from statistics import mean
 from scipy.stats import linregress
+
+
 '''Exercice 1'''
 
 # 1 (a,b et c)
